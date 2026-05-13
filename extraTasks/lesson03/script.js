@@ -28,6 +28,12 @@ switch (lang) {
         break;
 }
 
+let mapWeekDays = new Map();
+mapWeekDays.set('ru', ruWeekDays);
+mapWeekDays.set('en', enWeekDays);
+
+console.log(mapWeekDays.get(lang));
+
 // Задание 2 
 
 // У нас есть переменная namePerson. 
