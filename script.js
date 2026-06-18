@@ -1,10 +1,5 @@
 'use strict'
 
-const isNumber = function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
-}
-
-
 const appData = {
     title: '',
     screens: [],
@@ -15,6 +10,14 @@ const appData = {
     allServicePrices: 0,
     fullPrice: 0,
     servicePercentPrice: 0,
+
+    isNumber: function (num) {
+        return !isNaN(parseFloat(num)) && isFinite(num);
+    },
+
+    isString: function (str) {
+        return   str.trim() !== '' && !appData.isNumber(str);
+    },
 
     start: function () {
         appData.asking();
@@ -27,26 +30,39 @@ const appData = {
     },
 
     asking: function () {
-        appData.title = prompt("Как называется ваш проект?", "RepoFrontend");
+
+        do {
+            appData.title = prompt("Как называется ваш проект?", "RepoFrontend");
+        } while (!appData.isString(appData.title));
+        
         
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какие типы экранов нужно разработать?", "Простые");
+            let name = '';
             let price = 0;
 
             do {
-                price = +prompt("Сколько будет стоить данная работа?", 20000);
-            } while (!isNumber(price));
+                 name = prompt("Какие типы экранов нужно разработать?", "Простые");
+            } while (!appData.isString(name))
+           
+            
+            do {
+                price = prompt("Сколько будет стоить данная работа?", 10000);
+            } while (!appData.isNumber(price));
 
             appData.screens.push({id: i, name: name, price: price})
         }
 
         for (let i = 0; i < 2; i++) {
-            let name = prompt("Какой дополнительный тип услуги нужен?", "услуга_1");
+            let name = '';
             let servicePrice = 0; 
 
             do {
-                servicePrice = +prompt("Сколько это будет стоить?", 1000);
-            } while (!isNumber(servicePrice));
+                name = prompt("Какой дополнительный тип услуги нужен?", "услуга_1");
+            } while (!appData.isString(name));
+
+            do {
+                servicePrice = prompt("Сколько это будет стоить?", 1000);
+            } while (!appData.isNumber(servicePrice));
 
             appData.services[name] = +servicePrice;
 
